@@ -3,7 +3,7 @@
   <div class="skeleton-card"></div>
 </div>
 
-<div class="details" *ngIf="!isLoading && user as u">
+<div class="details" *ngIf="!isLoading && user as user">
   <div class="button">
     <button mat-stroked-button (click)="back()">
       <mat-icon>arrow_back</mat-icon>
@@ -12,11 +12,11 @@
   </div>
 
   <mat-card class="details-card">
-    <img [src]="u.avatar" [alt]="u.first_name + ' ' + u.last_name" />
+    <img [src]="user.avatar" [alt]="user.first_name + ' ' + user.last_name" />
     <div class="info">
-      <div class="title">{{ u.first_name }} {{ u.last_name }}</div>
-      <div class="sub">ID: {{ u.id }}</div>
-      <div class="sub">Email: {{ u.email }}</div>
+      <div class="title">{{ user.first_name }} {{ user.last_name }}</div>
+      <div class="sub">ID: {{ user.id }}</div>
+      <div class="sub">Email: {{ user.email }}</div>
     </div>
   </mat-card>
 </div>

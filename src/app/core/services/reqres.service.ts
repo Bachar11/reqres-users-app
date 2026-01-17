@@ -11,7 +11,7 @@ export class ReqresService {
   constructor(private http: HttpClient) {}
 
 getUsersPage(page: number): Observable<UsersPageResponse> {
-  const timestamp = new Date().getTime(); // prevents caching
+  const timestamp = new Date().getTime();
   return this.http.get<UsersPageResponse>(
     `${this.baseUrl}/users.php?page=${page}&t=${timestamp}`
   );
