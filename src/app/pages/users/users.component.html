@@ -1,0 +1,54 @@
+<div class="page">
+
+  <div class="cards">
+
+    <ng-container *ngIf="isLoading; else dataState">
+      <div
+        class="user-card skeleton"
+        *ngFor="let _ of skeletons"
+      ></div>
+    </ng-container>
+
+    <ng-template #dataState>
+      <ng-container *ngIf="users.length > 0; else noUsers">
+        <a
+          class="card-link"
+          *ngFor="let u of users"
+          [routerLink]="['/users', u.id]"
+        >
+          <mat-card class="user-card">
+            <img
+              mat-card-image
+              [src]="u.avatar"
+              [alt]="u.first_name + ' ' + u.last_name"
+              loading="lazy"
+            />
+
+            <mat-card-content>
+              <div class="name">
+                {{ u.first_name }} {{ u.last_name }}
+              </div>
+              <div class="id">
+                ID: {{ u.id }}
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </ng-container>
+    </ng-template>
+
+  </div>
+
+  <ng-template #noUsers>
+    <p class="empty">No users found</p>
+  </ng-template>
+
+  <mat-paginator
+    [length]="total"
+    [pageSize]="perPage"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[6]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+</div>

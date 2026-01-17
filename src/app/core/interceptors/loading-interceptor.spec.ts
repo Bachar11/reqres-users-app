@@ -1,17 +1,25 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpInterceptorFn } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { LoadingService } from '../services/LoadingService ';
 
-import { loadingInterceptor } from './loading-interceptor';
+@Injectable()
+export class LoadingInterceptor implements HttpInterceptor {
+  constructor(private loading: LoadingService) {}
 
-describe('loadingInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => loadingInterceptor(req, next));
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
-
-  it('should be created', () => {
-    expect(interceptor).toBeTruthy();
-  });
-});
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    this.loading.show();
+    return next.handle(req).pipe(
+      finalize(() => this.loading.hide())
+    );
+  }
+}

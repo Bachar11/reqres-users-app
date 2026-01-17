@@ -1,0 +1,22 @@
+<div class="details skeleton" *ngIf="isLoading">
+  <div class="skeleton-button"></div>
+  <div class="skeleton-card"></div>
+</div>
+
+<div class="details" *ngIf="!isLoading && user as u">
+  <div class="button">
+    <button mat-stroked-button (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <mat-card class="details-card">
+    <img [src]="u.avatar" [alt]="u.first_name + ' ' + u.last_name" />
+    <div class="info">
+      <div class="title">{{ u.first_name }} {{ u.last_name }}</div>
+      <div class="sub">ID: {{ u.id }}</div>
+      <div class="sub">Email: {{ u.email }}</div>
+    </div>
+  </mat-card>
+</div>

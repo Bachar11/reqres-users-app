@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Observable,BehaviorSubject } from 'rxjs';
-@Injectable({
-  providedIn: 'root',
-})
-export class LoadingService  {
-  private pending= 0;
-  private loadingSubject = new BehaviorSubject<boolean>(false);
+import { BehaviorSubject } from 'rxjs';
 
+@Injectable({ providedIn: 'root' })
+export class LoadingService {
+  private pending = 0;
+  private _loading$ = new BehaviorSubject<boolean>(false);
 
-  get Loading$(): Observable<boolean>{
-    return this.loadingSubject.asObservable();
-  }
+  readonly loading$ = this._loading$.asObservable();
 
-  start(): void{
+  show(): void {
     this.pending++;
-    this.loadingSubject.next(true);
+    if (this.pending === 1) this._loading$.next(true);
   }
 
-  end(): void{
-    this.pending= Math.max(0,this.pending-1);
-    if(this.pending===0)this.loadingSubject.next(false);
+  hide(): void {
+    this.pending = Math.max(0, this.pending - 1);
+    if (this.pending === 0) this._loading$.next(false);
   }
-  
+
+  reset(): void {
+    this.pending = 0;
+    this._loading$.next(false);
+  }
 }

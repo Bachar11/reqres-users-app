@@ -1,0 +1,50 @@
+<mat-toolbar class="toolbar">
+  <div class="brand" routerLink="/users">
+    800 Storage
+  </div>
+
+  <div class="search-wrapper" >
+    <mat-form-field
+      appearance="outline"
+      class="search-field"
+      floatLabel="always">
+
+      <mat-label>Search user by ID</mat-label>
+
+   <input
+  matInput
+  type="text"
+  inputmode="numeric"
+  pattern="[0-9]*"
+  placeholder="Type ID"
+  [formControl]="searchId"
+  [matAutocomplete]="auto"
+  (input)="onNumericInput($event)" />
+
+      <mat-icon matSuffix>search</mat-icon>
+
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="openResultFromOption($event.option.value)">
+
+        <mat-option
+          *ngFor="let user of filteredUsers"
+          [value]="user">
+
+          <div class="option-item">
+            <img [src]="user.avatar" alt="{{ user.first_name }}" />
+            <span>
+              {{ user.first_name }} {{ user.last_name }}
+              <small>ID {{ user.id }}</small>
+            </span>
+          </div>
+        </mat-option>
+
+        <mat-option *ngIf="filteredUsers.length === 0" disabled>
+          <span class="empty">No users found</span>
+        </mat-option>
+      </mat-autocomplete>
+
+    </mat-form-field>
+  </div>
+</mat-toolbar>

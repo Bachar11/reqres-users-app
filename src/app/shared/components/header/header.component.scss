@@ -1,0 +1,122 @@
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+ 
+  min-height: 88px;       
+  padding: 10px 20px;
+
+  display: flex;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #0f2027,
+    #203a43,
+    #2c5364
+  );
+
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+.search-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+    align-items: center;   
+}
+
+
+.search-field {
+  width: min(460px, 70vw);
+}
+
+
+::ng-deep .search-field .mat-form-field-label,
+::ng-deep .search-field.mat-focused .mat-form-field-label,
+::ng-deep .search-field .mat-form-field-label-floating {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+
+::ng-deep .search-field input.mat-input-element {
+  color: #ffffff !important;
+  caret-color: #ffffff;
+  font-size: 15px;
+}
+
+
+::ng-deep .search-field input:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.18) inset;
+}
+
+
+::ng-deep .search-field ::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+  opacity: 1;
+}
+
+
+::ng-deep .search-field .mat-form-field-flex {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+}
+
+::ng-deep .search-field .mat-form-field-outline,
+::ng-deep .search-field .mat-form-field-outline-thick {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
+::ng-deep .search-field .mat-icon {
+  color: #ffffff;
+}
+
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 1.2;
+
+    small {
+      display: block;
+      font-size: 11px;
+      color: #888;
+    }
+  }
+}
+
+
+.empty {
+  opacity: 0.6;
+  font-style: italic;
+}
+
