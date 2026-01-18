@@ -27,8 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchId = new FormControl<string>('');
   filteredUsers: ReqResUser[] = [];
   private destroy$ = new Subject<void>();
+  searchStarted:boolean=false
 
-  constructor(private api: ReqresService, private router: Router) {}
+  constructor(private api: ReqresService, private router: Router) {
+    
+  }
 
   
 onNumericInput(event: Event) {
@@ -40,29 +43,34 @@ onNumericInput(event: Event) {
     
 
     this.searchId.valueChanges
-      .pipe(
-        takeUntil(this.destroy$),
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((val) => {
-          const raw = String(val).trim();
-          if (!raw) return of([]);
+  .pipe(
+    takeUntil(this.destroy$),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((val) => {
+      const raw = String(val).trim();
+      
+      // Track if user started typing
+      this.searchStarted = raw.length > 0;
 
-          const id = Number(raw);
-          if (Number.isInteger(id) && id > 0) {
-            return this.api.getUserById(id).pipe(
-              catchError(() => of(null)),
-              switchMap((user) => (user ? of([user]) : of([])))
-            );
-          } else {
-            return of([]);
-          }
-        })
-      )
-      .subscribe((users: ReqResUser[]) => {
-        this.filteredUsers = users;
-      });
-  }
+      if (!raw) return of([]); // empty input → no results
+
+      const id = Number(raw);
+      if (Number.isInteger(id) && id > 0) {
+        return this.api.getUserById(id).pipe(
+          catchError(() => of(null)),
+          switchMap((user) => (user ? of([user]) : of([])))
+        );
+      } else {
+        // For non-numeric search (like name), we can extend later
+        return of([]);
+      }
+    })
+  )
+  .subscribe((users: ReqResUser[]) => {
+    this.filteredUsers = users;
+  });
+}
 
   openResultFromOption(user: ReqResUser) {
     if (user && user.id) {
